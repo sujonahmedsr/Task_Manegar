@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { authController } from "./authController";
 import { userLoginValidation } from "./authValidation";
-import validateRequest from "../../../utils/validRequest";
-import { upload } from "../../../utils/imageUpload";
+import { upload } from "../../utils/imageUpload";
+import validateRequest from "../../utils/validRequest";
 
 const authRoute = Router()
 

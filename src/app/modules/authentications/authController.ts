@@ -1,8 +1,8 @@
 import { RequestHandler } from "express"
 import { authServices } from "./authServices"
 import httpStatus from 'http-status-codes'
-import catchAsync from "../../../utils/catchAsync"
-import { sendImgToCloudinary } from "../../../utils/imageUpload"
+import catchAsync from "../../utils/catchAsync"
+import { sendImgToCloudinary } from "../../utils/imageUpload"
 
 const userRegistration: RequestHandler = catchAsync(async (req, res) => {
     const body = JSON.parse(req.body.data)

@@ -1,4 +1,4 @@
-import sendMail from "../../../utils/sendMail";
+import sendMail from "../../utils/sendMail";
 import { UserModel } from "./auhtSchemModel";
 import { IUserLogin, IUserRegistration } from "./authInterface";
 import bcrypt from 'bcrypt'

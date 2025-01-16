@@ -1,8 +1,8 @@
 import express, { Request, Response } from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
-import authRoute from './app/modules/tasks/authentications/authRoute'
 import globalErrorHandler from './app/utils/globalErrorHandling'
+import authRoute from './app/modules/authentications/authRoute'
 const app = express()
 
 // Middlewares
