@@ -1,8 +1,10 @@
+import { StatusCodes } from "http-status-codes";
 import sendMail from "../../utils/sendMail";
 import { UserModel } from "./auhtSchemModel";
 import { IUserLogin, IUserRegistration } from "./authInterface";
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import AppError from "../../utils/AppError";
 
 const authRegistraionToDb = async (payload: IUserRegistration) => {
     const { name, email, password } = payload;
@@ -10,18 +12,18 @@ const authRegistraionToDb = async (payload: IUserRegistration) => {
     //validation
     if (!name || !email || !password) {
         // 400 Bad Request
-        throw new Error("All fields are required");
+        throw new AppError(StatusCodes.BAD_GATEWAY, "All fields are required");
     }
 
     // check if user exist 
     const user = await UserModel.findOne({ email })
     if (user) {
-        throw new Error('This user already Registerd!')
+        throw new AppError(StatusCodes.BAD_REQUEST, 'This user already Registerd!')
     }
 
     // check password length
     if (password.length < 6) {
-        throw new Error("Password must be at least 6 characters")
+        throw new AppError(StatusCodes.BAD_REQUEST, "Password must be at least 6 characters")
     }
 
     const result = await UserModel.create(payload)
@@ -32,17 +34,17 @@ const authLogins = async (payload: IUserLogin) => {
     const { email, password } = payload;
     const user = await UserModel.findOne({ email })
     if (!user) {
-        throw new Error('User not found')
+        throw new AppError(StatusCodes.NOT_FOUND, 'User not found')
     }
 
 
     if(user?.isBlocked){
-        throw new Error('User is blocked.!')
+        throw new AppError(StatusCodes.BAD_REQUEST, 'User is blocked.!')
     }
 
     const isPassMatched = await bcrypt.compare(password, user?.password)
     if (!isPassMatched) {
-        throw new Error('Wrong Password!!! Tell me who are you? 😈')
+        throw new AppError(StatusCodes.BAD_REQUEST, 'Wrong Password!!! Tell me who are you? 😈')
     }
 
     const jwtPayload = {
@@ -56,11 +58,11 @@ const authLogins = async (payload: IUserLogin) => {
 const forgetPasswordDb = async (payload: { email: string }) => {
     const user = await UserModel.findOne({ email: payload.email })
     if (!user) {
-        throw new Error('User not found')
+        throw new AppError(StatusCodes.NOT_FOUND, 'User not found')
     }
 
     if(user?.isBlocked){
-        throw new Error('User is blocked.!')
+        throw new AppError(StatusCodes.BAD_REQUEST, 'User is blocked.!')
     }
 
     const jwtPayload = {
@@ -78,17 +80,17 @@ const resetPassword = async (payload: { id: string, token: string, password: str
     const user = await UserModel.findById(payload.id)
     
     if (!user) {
-        throw new Error('User not found!')
+        throw new AppError(StatusCodes.NOT_FOUND, 'User not found!')
     }
 
     if(user?.isBlocked){
-        throw new Error('User is blocked.!')
+        throw new AppError(StatusCodes.BAD_REQUEST, 'User is blocked.!')
     }
 
     // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
     jwt.verify(payload.token, "secret", (err, decoded) => {
         if (err) {
-            throw new Error('Invalid or expired token')
+            throw new AppError(StatusCodes.BAD_GATEWAY, 'Invalid or expired token')
         }
     })
 

@@ -1,8 +1,9 @@
 import { RequestHandler } from "express"
 import { authServices } from "./authServices"
-import httpStatus from 'http-status-codes'
+import httpStatus, { StatusCodes } from 'http-status-codes'
 import catchAsync from "../../utils/catchAsync"
 import { sendImgToCloudinary } from "../../utils/imageUpload"
+import AppError from "../../utils/AppError"
 
 const userRegistration: RequestHandler = catchAsync(async (req, res) => {
     const body = JSON.parse(req.body.data)
@@ -28,7 +29,7 @@ const authLogin = catchAsync(async (req, res) => {
 
 
     if (!result) {
-        throw new Error("Something went wrong")
+        throw new AppError(StatusCodes.BAD_GATEWAY, "Something went wrong")
     }
 
     res.cookie("token", result?.token, { httpOnly: true });
