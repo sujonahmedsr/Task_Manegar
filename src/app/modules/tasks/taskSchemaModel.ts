@@ -17,6 +17,8 @@ const taskSchema = new Schema<taskInterface>({
     },
     isCompleted: {type: Boolean, default: false},
     user: {type: String, required: [true, "This field is required"]}
+}, {
+    timestamps: true
 })
 
 export const taskModel = model<taskInterface>("Tasks", taskSchema)

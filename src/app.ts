@@ -3,6 +3,7 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import globalErrorHandler from './app/utils/globalErrorHandling'
 import authRoute from './app/modules/authentications/authRoute'
+import taskRoute from './app/modules/tasks/taskRoute'
 const app = express()
 
 // Middlewares
@@ -13,6 +14,7 @@ app.use(cookieParser())
 
 // all Routes 
 app.use('/api/auth', authRoute)
+app.use('/api/user', taskRoute)
 
 
 

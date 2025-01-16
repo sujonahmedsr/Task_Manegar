@@ -26,6 +26,7 @@ const userSchema = new Schema<IUserRegistration>({
     photo: {
         type: String
     },
+    isBlocked: {type: Boolean, default: false}
 }, {
     timestamps: true
 })

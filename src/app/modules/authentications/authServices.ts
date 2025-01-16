@@ -35,6 +35,11 @@ const authLogins = async (payload: IUserLogin) => {
         throw new Error('User not found')
     }
 
+
+    if(user?.isBlocked){
+        throw new Error('User is blocked.!')
+    }
+
     const isPassMatched = await bcrypt.compare(password, user?.password)
     if (!isPassMatched) {
         throw new Error('Wrong Password!!! Tell me who are you? 😈')
@@ -54,6 +59,10 @@ const forgetPasswordDb = async (payload: { email: string }) => {
         throw new Error('User not found')
     }
 
+    if(user?.isBlocked){
+        throw new Error('User is blocked.!')
+    }
+
     const jwtPayload = {
         email: user?.email
     }
@@ -70,6 +79,10 @@ const resetPassword = async (payload: { id: string, token: string, password: str
     
     if (!user) {
         throw new Error('User not found!')
+    }
+
+    if(user?.isBlocked){
+        throw new Error('User is blocked.!')
     }
 
     // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
