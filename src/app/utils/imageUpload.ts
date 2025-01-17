@@ -4,9 +4,9 @@ import fs from 'fs'
 import { v2 as cloudinary, UploadApiResponse } from 'cloudinary';
 
 cloudinary.config({
-    cloud_name: 'dvjeaplel',
-    api_key: '965318298626492',
-    api_secret: 'JjK7nxRbUadlYJ4IesuGh1QKw9Q'
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUD_API,
+    api_secret: process.env.CLOUD_SECRETE
 });
 
 export const sendImgToCloudinary = (imgName: string, file: string): Promise<Record<string, unknown>> => {

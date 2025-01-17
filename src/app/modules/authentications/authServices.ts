@@ -50,7 +50,7 @@ const authLogins = async (payload: IUserLogin) => {
     const jwtPayload = {
         email: user?.email
     }
-    const token = jwt.sign(jwtPayload, "secreate1254hajibi", { expiresIn: '1d' })
+    const token = jwt.sign(jwtPayload, process.env.SECTRETE as string, { expiresIn: '1d' })
 
     return { token, user };
 }
@@ -69,7 +69,7 @@ const forgetPasswordDb = async (payload: { email: string }) => {
         email: user?.email
     }
 
-    const token = jwt.sign(jwtPayload, 'secret', { expiresIn: "10m" })
+    const token = jwt.sign(jwtPayload, process.env.SECTRETE as string, { expiresIn: "10m" })
 
     const resetLink = `http://localhost:5173/reset-password?_id=${user?._id}&token=${token}`
 

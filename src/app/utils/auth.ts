@@ -15,7 +15,7 @@ export const Auth = () => {
 
         const decoded = jwt.verify(
             token, 
-            "secreate1254hajibi",
+            process.env.SECTRETE as string,
         ) as JwtPayload;
 
         const {email} = decoded
