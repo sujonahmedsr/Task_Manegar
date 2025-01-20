@@ -19,7 +19,7 @@ const userRegistration: RequestHandler = catchAsync(async (req, res) => {
     res.send({
         status: httpStatus.CREATED,
         success: true,
-        message: 'User created Successfully!',
+        message: 'User  created Successfully!',
         data: result
     })
 })
