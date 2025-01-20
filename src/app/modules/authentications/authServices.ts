@@ -48,11 +48,12 @@ const authLogins = async (payload: IUserLogin) => {
     }
 
     const jwtPayload = {
+        userId: user._id,
         email: user?.email
     }
     const token = jwt.sign(jwtPayload, process.env.SECTRETE as string, { expiresIn: '1d' })
 
-    return { token, user };
+    return { token, user: {...jwtPayload} };
 }
 
 const forgetPasswordDb = async (payload: { email: string }) => {
