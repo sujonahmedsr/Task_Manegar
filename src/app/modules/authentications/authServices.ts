@@ -32,9 +32,11 @@ const authRegistraionToDb = async (payload: IUserRegistration) => {
 
 const authLogins = async (payload: IUserLogin) => {
     const { email, password } = payload;
+    
     const user = await UserModel.findOne({ email })
+    
     if (!user) {
-        throw new AppError(StatusCodes.NOT_FOUND, 'User not found')
+        throw new AppError(StatusCodes.NOT_FOUND, 'User not found, sdjf')
     }
 
 
@@ -48,7 +50,7 @@ const authLogins = async (payload: IUserLogin) => {
     }
 
     const jwtPayload = {
-        userId: user._id,
+        userId: user?._id,
         email: user?.email
     }
     const token = jwt.sign(jwtPayload, process.env.SECTRETE as string, { expiresIn: '1d' })

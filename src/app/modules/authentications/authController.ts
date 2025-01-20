@@ -27,7 +27,6 @@ const userRegistration: RequestHandler = catchAsync(async (req, res) => {
 const authLogin = catchAsync(async (req, res) => {
     const result = await authServices.authLogins(req.body)
 
-
     if (!result) {
         throw new AppError(StatusCodes.BAD_GATEWAY, "Something went wrong")
     }
