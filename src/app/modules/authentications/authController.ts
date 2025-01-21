@@ -8,6 +8,8 @@ import AppError from "../../utils/AppError"
 const userRegistration: RequestHandler = catchAsync(async (req, res) => {
     const body = JSON.parse(req.body.data)
 
+    
+
     if (req.file) {
         const imgName = 'Tour'
         const path = req.file?.path as string

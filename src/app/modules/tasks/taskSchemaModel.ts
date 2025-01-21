@@ -13,7 +13,6 @@ const taskSchema = new Schema<taskInterface>({
     priority: {
         type: String,
         enum: ["low" , "medium", "high"],
-        default: "low"
     },
     isCompleted: {type: Boolean, default: false},
     user: {type: String, required: [true, "This field is required"]}

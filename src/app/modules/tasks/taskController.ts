@@ -14,7 +14,8 @@ const taskCreate: RequestHandler = catchAsync(async (req, res) => {
 })
 
 const getAllTask: RequestHandler = catchAsync(async (req, res) => {
-    const result = await taskServices.getAllTaskFromDb()
+    const {email} = req.user
+    const result = await taskServices.getAllTaskFromDb(email)
     res.send({
         status: httpStatus.OK,
         success: true,

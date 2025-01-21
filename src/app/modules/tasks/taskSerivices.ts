@@ -8,8 +8,8 @@ const taskCreateIntoDb = async(body: taskInterface) => {
     const result = await taskModel.create(body)
     return result
 }
-const getAllTaskFromDb = async () => {
-    const result = await taskModel.find()
+const getAllTaskFromDb = async (email: string) => {
+    const result = await taskModel.find({user: email})
     return result
 }
 const getSignleTaskFromDb = async (id: string) => {
