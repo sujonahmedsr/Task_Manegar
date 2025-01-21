@@ -70,10 +70,22 @@ const logout = catchAsync(async (req, res) => {
     });
 })
 
+const getSingleUser = catchAsync(async (req, res) => {
+    const {userId} = req.params
+    const result = await authServices.getSingleUserFromDb(userId)
+    res.send({
+        status: httpStatus.OK,
+        success: true,
+        message: 'Get user Successfully!',
+        data: result
+    })
+})
+
 export const authController = {
     userRegistration,
     authLogin,
     forgetPassword,
     resetPassword,
-    logout
+    logout,
+    getSingleUser
 }

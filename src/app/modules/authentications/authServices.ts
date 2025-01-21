@@ -32,15 +32,15 @@ const authRegistraionToDb = async (payload: IUserRegistration) => {
 
 const authLogins = async (payload: IUserLogin) => {
     const { email, password } = payload;
-    
+
     const user = await UserModel.findOne({ email })
-    
+
     if (!user) {
         throw new AppError(StatusCodes.NOT_FOUND, 'User not found, sdjf')
     }
 
 
-    if(user?.isBlocked){
+    if (user?.isBlocked) {
         throw new AppError(StatusCodes.BAD_REQUEST, 'User is blocked.!')
     }
 
@@ -55,7 +55,7 @@ const authLogins = async (payload: IUserLogin) => {
     }
     const token = jwt.sign(jwtPayload, process.env.SECTRETE as string, { expiresIn: '1d' })
 
-    return { token, user: {...jwtPayload} };
+    return { token, user: { ...jwtPayload } };
 }
 
 const forgetPasswordDb = async (payload: { email: string }) => {
@@ -64,7 +64,7 @@ const forgetPasswordDb = async (payload: { email: string }) => {
         throw new AppError(StatusCodes.NOT_FOUND, 'User not found')
     }
 
-    if(user?.isBlocked){
+    if (user?.isBlocked) {
         throw new AppError(StatusCodes.BAD_REQUEST, 'User is blocked.!')
     }
 
@@ -81,12 +81,12 @@ const forgetPasswordDb = async (payload: { email: string }) => {
 
 const resetPassword = async (payload: { id: string, token: string, password: string }) => {
     const user = await UserModel.findById(payload.id)
-    
+
     if (!user) {
         throw new AppError(StatusCodes.NOT_FOUND, 'User not found!')
     }
 
-    if(user?.isBlocked){
+    if (user?.isBlocked) {
         throw new AppError(StatusCodes.BAD_REQUEST, 'User is blocked.!')
     }
 
@@ -104,9 +104,19 @@ const resetPassword = async (payload: { id: string, token: string, password: str
     return result;
 }
 
+
+const getSingleUserFromDb = async (id: string) => {
+    const result = await UserModel.findById({_id: id})
+    if (!result) {
+        throw new AppError(StatusCodes.NOT_FOUND, 'User not found!')
+    }
+    return result
+}
+
 export const authServices = {
     authRegistraionToDb,
     authLogins,
     forgetPasswordDb,
-    resetPassword
+    resetPassword,
+    getSingleUserFromDb
 }

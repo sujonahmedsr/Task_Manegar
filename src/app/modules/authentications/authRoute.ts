@@ -11,5 +11,6 @@ authRoute.post('/user-login', validateRequest(userLoginValidation), authControll
 authRoute.post('/forget-password', authController.forgetPassword)
 authRoute.post('/reset-password', authController.resetPassword)
 authRoute.post('/user-logout', authController.logout)
+authRoute.get('/user/:userId', authController.getSingleUser)
 
 export default authRoute
