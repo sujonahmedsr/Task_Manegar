@@ -15,7 +15,7 @@ const getAllTaskFromDb = async (email: string) => {
 const getSignleTaskFromDb = async (id: string) => {
     const task = await taskModel.findById(id)
     if(!task){
-        throw new AppError(StatusCodes.NOT_FOUND, "This task is not found")
+        throw new AppError(StatusCodes.NOT_FOUND, "This task is not  found")
     }
     const result = await taskModel.findById(id)
     return result
